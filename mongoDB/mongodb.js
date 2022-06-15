@@ -77,15 +77,16 @@ async function deleteQuestion(id){
   const result = await Question.deleteOne({ id: id});
   console.log(result);
 }
+
+// running the app
 try{
-  // q1.save(); // id=3
+  // const result = q1.save(); // id=3
   // q2.save();
+  console.log('add item ', result);
 } catch (ex) {
     for (field in ex.errors)
       console.log(ex.errors[field]);
 }
-
-getQuestions();
-// updateQuestion('62a2614ffd9a02eb9e8e2617');
 // updateQuestion(3);
-// deleteQuestion(3);
+deleteQuestion(3);
+getQuestions();

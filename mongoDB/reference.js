@@ -56,16 +56,19 @@ function createQuestion(id, brief, detail){
 function listQuestions() {
   const questions = Question
     .find()
-    .populate('brief')
+    .populate('brief detail')
     .select('id brief');
-  // console.log('list question: ', questions);
+  console.log('list question: ', questions);
 }
-async function updateBrief(brief) {
-  const result = await brief.set({
-    'name': 'sum updated'
-  });
-  await result.save();
-  console.log('update brief ', result);
+async function updateBrief() {
+  const brief = await Brief.findOne({name: /.*sum.*/});
+  if (brief){
+    const result = await brief.set({
+      'name': 'sum updated'
+    });
+    await brief.save();
+    console.log('update brief ', result);
+  }
 }
 async function updateDetail(id) {
   // detail.set({
@@ -96,12 +99,12 @@ async function update(){
   // const detail = Detail.findOne({id: 6});
   // const brief = Brief.findOne({id: 6});
   console.log('Updatding...')
-  updateDetail(6);
-  updateBrief(Brief.findOne({id: 6}));
+  await updateDetail(6);
+  await updateBrief();
 }
 function run(){
-  initialize();
-  update();
+  // initialize();
+  // update();
   listQuestions();
 }
 run();
